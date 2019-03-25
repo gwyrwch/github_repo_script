@@ -1,0 +1,19 @@
+#!/bin/bash
+echo $1
+
+if [ -n "$1" ]
+then
+git init
+git add *
+echo 'venv' > '.gitignore'
+git commit -am 'Initial commit'
+x=$(printf '{"name":"%s"}' "$1")
+
+curl -u 'gwyrwch' https://api.github.com/user/repos -d $x 
+sleep 3
+
+git remote add origin https://github.com/gwyrwch/$1.git
+git push -u origin master
+else
+echo "Git repository name needed"
+fi
